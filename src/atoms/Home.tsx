@@ -1,4 +1,4 @@
-export const Home = ({ state = true }: any) => {
+export const Home = ({ state = true }: { state: boolean }) => {
   return (
     <svg
       width="22"

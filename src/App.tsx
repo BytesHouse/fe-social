@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { Home } from "./atoms/Home";
+import { LoginForm } from "./molecules/LoginForm";
+import { RegisterForm } from "./molecules/RegisterForm";
+import { ImageForm } from "./molecules/ImageForm";
 
 // router
 // Context
@@ -8,18 +11,31 @@ import { Home } from "./atoms/Home";
 function App() {
   return (
     <>
-      {/* <ContextProvider>
-        <BrowserRouter>
-          <ProtectedRoutes>
-            <Main />
-          </ProtectedRoutes>
-          <SignIn />
-          <Registration />
-        </BrowserRouter>
-      </ContextProvider> */}
+      <span>Login</span>
+      <LoginForm />
+      <span>Register</span>
+      <RegisterForm />
+      <span>File Uploder</span>
+      <ImageForm />
     </>
   );
 }
+
+// function App() {
+//   return (
+//     <>
+//       {/* <ContextProvider>
+//         <BrowserRouter>
+//           <ProtectedRoutes>
+//             <Main />
+//           </ProtectedRoutes>
+//           <SignIn />
+//           <Registration />
+//         </BrowserRouter>
+//       </ContextProvider> */}
+//     </>
+//   );
+// }
 
 // function App() {
 //   const [state, setState] = useState(0);
