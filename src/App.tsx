@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { Home } from "./atoms/Home";
+// import { useState } from "react";
+// import { Home } from "./atoms/Home";
 import { LoginForm } from "./molecules/LoginForm";
 import { RegisterForm } from "./molecules/RegisterForm";
 import { ImageForm } from "./molecules/ImageForm";
+import PostsList from "./molecules/PostsList";
 
 // router
 // Context
@@ -17,6 +18,8 @@ function App() {
       <RegisterForm />
       <span>File Uploder</span>
       <ImageForm />
+      <span>Posts</span>
+      <PostsList />
     </>
   );
 }

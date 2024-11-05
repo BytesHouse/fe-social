@@ -3,9 +3,12 @@ import { $api } from "../api/api";
 
 export const LoginForm = () => {
   const [userObject, setUserObject] = useState({ email: "", password: "" });
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    $api.post("/auth/login", userObject);
+    $api
+      .post("/auth/login", userObject)
+      .then((res) => localStorage.setItem("token", res.data.token));
   };
 
   return (
