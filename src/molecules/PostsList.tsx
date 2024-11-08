@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { $api } from "../api/api";
 import styles from "./Posts.module.css";
 import { parseData } from "../helpers/parseData";
+import { matchUserId } from "../helpers/matchUsersId";
 
-type Post = {
+export type Post = {
   _id: string;
   user_id: string;
   image_url: string;
@@ -16,13 +17,17 @@ type Post = {
 
 export const PostsList = () => {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [follows, setFollows] = useState([]);
 
   useEffect(() => {
     const getPosts = () => {
       $api.get("/post/all").then((res) => setPosts(res.data));
     };
-    const getFollowers = () => {
-      $api.get(`/follow/672c78f0b6361b9bb37beca9/followers`);
+    const getFollowers = async () => {
+      const response = await $api.get(
+        `/follow/672c78f0b6361b9bb37beca9/following`
+      );
+      setFollows(response.data);
     };
     getFollowers();
     getPosts();
@@ -32,7 +37,11 @@ export const PostsList = () => {
     <ul className={styles.postList}>
       {posts.length > 0 ? (
         posts.map((item: Post) => (
-          <PostItem key={item._id} item={item} isFollow={true} />
+          <PostItem
+            key={item._id}
+            item={item}
+            isFollow={matchUserId(follows, item.user_id)}
+          />
         ))
       ) : (
         <li>No Posts</li>
@@ -88,16 +97,20 @@ interface FollowButtonProps {
 }
 
 function FollowButton({ isFollow, userId, targetUserId }: FollowButtonProps) {
+  const [follow, setFollow] = useState(isFollow);
+
   const handleFollow = () => {
-    if (!isFollow) {
+    if (!follow) {
       $api.post(`/follow/${userId}/follow/${targetUserId}`);
+      setFollow(true);
     } else {
       $api.delete(`/follow/${userId}/unfollow/${targetUserId}`);
+      setFollow(false);
     }
   };
 
   return (
-    <button onClick={handleFollow}>{isFollow ? "follow" : "unfollow"}</button>
+    <button onClick={handleFollow}>{!follow ? "follow" : "unfollow"}</button>
   );
 }
 
